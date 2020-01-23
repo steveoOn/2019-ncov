@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 
 const domain = `https://3g.dxy.cn`;
 
-app.get("/", (req, res) => {
+app.get("/ncov/api", (req, res) => {
   const option = {
     uri: `${domain}/newh5/view/pneumonia`,
     transform: body => cheerio.load(body)
@@ -16,9 +16,36 @@ app.get("/", (req, res) => {
 
   request(option)
     .then($ => {
-      //   console.log($("#root"));
-      const html = $("#root").html();
-      res.send(html);
+      // const html = $("#root").html();
+
+      const checkTime = $("#root").find($(".mapTitle___2QtRg"));
+      const location = $("#root")
+        .find($(".descBox___3dfIo"))
+        .children()
+        .map((i, el) => $(el).text());
+
+      const count = $("#root").find($(".confirmedNumber___3WrF5"));
+
+      const data = $(count)
+        .children()
+        .children()
+        .map((i, el) => $(el).text());
+
+      console.log(typeof data, data[0], data[1], data[2], data[3]);
+      console.log(location.toArray());
+
+      res.json({
+        trend: {
+          diagnosis: data[0],
+          suspected: data[1],
+          cured: data[2],
+          deceased: data[3]
+        },
+        location: location.toArray(),
+        time: checkTime.text()
+      });
+
+      // res.send("location");
     })
     .catch(err => console.log(err.message));
 });
