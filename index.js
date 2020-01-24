@@ -20,8 +20,9 @@ app.get("/ncov/api", (req, res) => {
 
       const checkTime = $("#root").find($(".mapTitle___2QtRg"));
       const location = $("#root")
-        .find($(".descBox___3dfIo"))
-        .children()
+        .find($(".subBlock3___3mcDz"))
+        .parent()
+        .nextAll()
         .map((i, el) => $(el).text());
 
       const count = $("#root").find($(".confirmedNumber___3WrF5"));
@@ -45,7 +46,7 @@ app.get("/ncov/api", (req, res) => {
         time: checkTime.text()
       });
 
-      // res.send("location");
+      // res.send(html);
     })
     .catch(err => console.log(err.message));
 });
