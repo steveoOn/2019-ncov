@@ -25,6 +25,16 @@ const Wrapper = styled.ul`
 
     p {
       padding-right: 0.4rem;
+
+      &:nth-child(2) {
+        color: #ff821d;
+      }
+      &:nth-child(3) {
+        color: #ff3768;
+      }
+      &:nth-child(4) {
+        color: #06d78c;
+      }
     }
   }
 
@@ -42,6 +52,16 @@ const Wrapper = styled.ul`
 
     p {
       padding-right: 0.4rem;
+
+      &:nth-child(2) {
+        color: #ff821d;
+      }
+      &:nth-child(3) {
+        color: #ff3768;
+      }
+      &:nth-child(4) {
+        color: #06d78c;
+      }
     }
   }
 `;
