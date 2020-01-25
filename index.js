@@ -11,12 +11,19 @@ const domain = `https://3g.dxy.cn`;
 app.get("/ncov/api", (req, res) => {
   const option = {
     uri: `${domain}/newh5/view/pneumonia`,
-    transform: body => cheerio.load(body)
+    transform(body) {
+      return cheerio.load(body);
+    }
   };
 
   request(option)
     .then($ => {
       // const html = $("#root").html();
+      // const text = $("#getAreaStat").html();
+      // const parse = code => {
+      //   return eval(`let obj = () => ${code}`);
+      // };
+      // console.log(parse(text));
 
       const checkTime = $("#root").find($(".mapTitle___2QtRg"));
       const location = $("#root")
@@ -45,7 +52,7 @@ app.get("/ncov/api", (req, res) => {
         time: checkTime.text()
       });
 
-      // res.send(html);
+      // res.send(text);
     })
     .catch(err => console.log(err.message));
 });

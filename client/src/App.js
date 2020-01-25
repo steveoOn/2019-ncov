@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Card from "./components/card";
 import Location from "./components/location";
 import { useApi } from "./container/useApi";
-import { useEventListener } from "./container/useEventListener";
+import { ReactComponent as IconCors } from "./static/icon-cors.svg";
 import SearchLocation from "./components/searchLocation";
 
 const CardContainer = styled.div`
@@ -15,7 +15,7 @@ const CardContainer = styled.div`
 `;
 
 const TopContainer = styled.div`
-  background-image: linear-gradient(180deg, #fbb049 0%, #f57823 100%);
+  background-image: linear-gradient(180deg, #ff6565 0%, #fe3535 100%);
   width: auto;
   height: 20rem;
   display: flex;
@@ -24,7 +24,7 @@ const TopContainer = styled.div`
   flex-direction: column;
 
   .update-time {
-    background: #ffb258;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 26px;
     color: white;
     padding: 0.6rem 1rem;
@@ -35,21 +35,42 @@ const TopContainer = styled.div`
     margin-top: 1.5rem;
   }
 
-  span {
-    font-size: 2rem;
-    margin: 2rem 0;
-  }
-
   .high-line {
     /* font-family: MF-ShangYaNoncommercial-Regular; */
-    font-size: 5rem;
-    color: #ffffff;
+    font-size: 106px;
+    color: rgba(255, 255, 255, 0.86);
+    text-shadow: 0 6px 16px rgba(180, 0, 0, 0.64);
     text-align: center;
+    margin-top: 1.5rem;
+    z-index: 1;
   }
 
-  p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 18px;
+  .icon-cors {
+    position: absolute;
+    top: 4.5rem;
+    z-index: 0;
+  }
+
+  .slogan {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.86);
+    text-align: center;
+    text-shadow: 0 6px 16px rgba(180, 0, 0, 0.64);
+    z-index: 1;
+    margin-top: 1.8rem;
+  }
+
+  .provider {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+    z-index: 1;
+
+    a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      text-align: center;
+    }
   }
 `;
 
@@ -92,11 +113,24 @@ function App() {
     <div className='App'>
       <TopContainer>
         <p className='update-time'>{data.time}</p>
-        <span role='img' aria-label='医生'>
-          👨‍⚕️👩‍⚕️
-        </span>
-        <p className='high-line'>致敬!</p>
-        <p>奋斗在一线的医护人员</p>
+        <p className='high-line'>致敬</p>
+        <p className='slogan'>
+          奋斗在一线的医护人员
+          <span role='img' aria-label='医生'>
+            👨‍⚕️👩‍⚕️
+          </span>
+        </p>
+        <p className='provider'>
+          Designed by 💜
+          <a
+            href='https://siwen.site/about'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            siwen.site
+          </a>
+        </p>
+        <IconCors className='icon-cors' />
       </TopContainer>
       <H>感谢丁香园-丁香医生数据提供</H>
       {data ? (
