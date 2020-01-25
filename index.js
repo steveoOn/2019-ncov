@@ -22,8 +22,7 @@ app.get("/ncov/api", (req, res) => {
       const location = $("#root")
         .find($(".subBlock3___3mcDz"))
         .parent()
-        .nextAll()
-        .map((i, el) => $(el).text());
+        .map((i, el) => $(el).html());
 
       const count = $("#root").find($(".confirmedNumber___3WrF5"));
 

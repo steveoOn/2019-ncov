@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "./components/card";
 import Location from "./components/location";
 import { useApi } from "./container/useApi";
+import { useEventListener } from "./container/useEventListener";
 import SearchLocation from "./components/searchLocation";
 
 const CardContainer = styled.div`
@@ -72,7 +73,18 @@ function App() {
 
   const submit = e => {
     e.preventDefault();
-    const result = data.location.filter(word => !word.indexOf(text));
+    // const result = data.location.filter(word => !word.indexOf(text));
+
+    const result = data.location.filter(result => {
+      // console.log("result", typeof result);
+      // convert html string to html obj https://www.labnol.org/code/19813-convert-html-to-text
+      const htmlObj = document.createElement("p");
+      htmlObj.innerHTML = result;
+      const word = htmlObj.textContent || htmlObj.innerText || "";
+
+      return !word.indexOf(text);
+    });
+
     setFilterText(result);
   };
 
@@ -86,7 +98,7 @@ function App() {
         <p className='high-line'>致敬!</p>
         <p>奋斗在一线的医护人员</p>
       </TopContainer>
-      <H>全国新冠状病毒肺炎感染数据</H>
+      <H>感谢丁香园-丁香医生数据提供</H>
       {data ? (
         <CardContainer>
           <Card title='确诊病例' icon='😷' count={data.trend.diagnosis} />
