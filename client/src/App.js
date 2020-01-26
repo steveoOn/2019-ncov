@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Card from "./components/card";
 import Location from "./components/location";
 import { useApi } from "./container/useApi";
-// import { ReactComponent as IconCors } from "./static/icon-cors.svg";
+import { ReactComponent as IconCors } from "./static/icon-cors.svg";
 import SearchLocation from "./components/searchLocation";
 
 const CardContainer = styled.div`
@@ -135,7 +135,7 @@ function App() {
             siwen.site
           </a>
         </p>
-        {/* <IconCors className='icon-cors' /> */}
+        <IconCors className='icon-cors' />
       </TopContainer>
       <H>感谢丁香园-丁香医生数据提供</H>
       {data ? (
