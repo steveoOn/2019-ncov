@@ -18,6 +18,10 @@
       "dest": "index.js"
     },
     {
+      "src": "/ncov/api/location",
+      "dest": "index.js"
+    },
+    {
       "src": "/static/(.*)",
       "headers": { "cache-control": "s-maxage=31536000,immutable" },
       "dest": "client/static/$1"

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Card from "./components/card";
 import Location from "./components/location";
 import { useApi } from "./container/useApi";
-import { ReactComponent as IconCors } from "./static/icon-cors.svg";
+// import { ReactComponent as IconCors } from "./static/icon-cors.svg";
 import SearchLocation from "./components/searchLocation";
 
 const CardContainer = styled.div`
@@ -84,9 +84,19 @@ const H = styled.p`
 function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
+  const [location, setLocation] = useState([]);
   const data = useApi();
 
   // console.log(data);
+
+  useEffect(() => {
+    fetch("ncov/api/location")
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        setLocation(data);
+      });
+  }, [location]);
 
   const search = e => {
     setText(e.target.value);
@@ -96,14 +106,9 @@ function App() {
     e.preventDefault();
     // const result = data.location.filter(word => !word.indexOf(text));
 
-    const result = data.location.filter(result => {
-      // console.log("result", typeof result);
-      // convert html string to html obj https://www.labnol.org/code/19813-convert-html-to-text
-      const htmlObj = document.createElement("p");
-      htmlObj.innerHTML = result;
-      const word = htmlObj.textContent || htmlObj.innerText || "";
-
-      return !word.indexOf(text);
+    const result = location.filter(result => {
+      // console.log(result.provinceShortName);
+      return !result.provinceShortName.indexOf(text);
     });
 
     setFilterText(result);
@@ -130,7 +135,7 @@ function App() {
             siwen.site
           </a>
         </p>
-        <IconCors className='icon-cors' />
+        {/* <IconCors className='icon-cors' /> */}
       </TopContainer>
       <H>感谢丁香园-丁香医生数据提供</H>
       {data ? (
@@ -143,9 +148,7 @@ function App() {
       ) : (
         <p>loading...</p>
       )}
-      <Location
-        locations={filterText.length === 0 ? data.location : filterText}
-      />
+      <Location locations={filterText.length === 0 ? location : filterText} />
       <form onSubmit={submit}>
         <label htmlFor='search-location' />
         <SearchLocation onSearch={search} text={text} />
