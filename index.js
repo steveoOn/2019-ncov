@@ -19,25 +19,15 @@ app.get("/ncov/api", (req, res) => {
   request(option)
     .then($ => {
       // const html = $("#root").html();
-      const text = $("#getAreaStat").get()[0].children[0].data;
-      const splitStart = text.split(/(try { window.getAreaStat = )/);
-      const splitEnd = splitStart[2].split(/(}catch\(e\){})/);
-
       const checkTime = $("#root").find($(".mapTitle___2QtRg"));
-      // const location = $("#root")
-      //   .find($(".subBlock3___3mcDz"))
-      //   .parent()
-      //   .map((i, el) => $(el).html());
 
       const count = $("#root").find($(".confirmedNumber___3WrF5"));
-
       const data = $(count)
         .children()
         .children()
         .map((i, el) => $(el).text());
 
       console.log(typeof data, data[0], data[1], data[2], data[3]);
-      // console.log(location.toArray());
 
       res.send({
         trend: {
