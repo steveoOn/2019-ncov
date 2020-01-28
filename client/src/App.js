@@ -85,6 +85,7 @@ function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
   const [location, setLocation] = useState([]);
+
   const data = useApi();
 
   // console.log(data);
@@ -138,16 +139,28 @@ function App() {
         <IconCors className='icon-cors' />
       </TopContainer>
       <H>感谢丁香园-丁香医生数据提供</H>
-      {data ? (
-        <CardContainer>
-          <Card title='确诊病例' icon='😷' count={data.trend.confirmedCount} />
-          <Card title='疑似病例' icon='🤧' count={data.trend.suspectedCount} />
-          <Card title='治愈病例' icon='💖' count={data.trend.curedCount} />
-          <Card title='死亡病例' icon='🎗' count={data.trend.deadCount} />
-        </CardContainer>
-      ) : (
-        <p>loading...</p>
-      )}
+      <CardContainer>
+        <Card
+          title='确诊病例'
+          icon='😷'
+          count={data.trend ? data.trend.confirmedCount : "..."}
+        />
+        <Card
+          title='疑似病例'
+          icon='🤧'
+          count={data.trend ? data.trend.suspectedCount : "..."}
+        />
+        <Card
+          title='治愈病例'
+          icon='💖'
+          count={data.trend ? data.trend.curedCount : "..."}
+        />
+        <Card
+          title='死亡病例'
+          icon='🎗'
+          count={data.trend ? data.trend.deadCount : "..."}
+        />
+      </CardContainer>
       <Location locations={filterText.length === 0 ? location : filterText} />
       <form onSubmit={submit}>
         <label htmlFor='search-location' />
