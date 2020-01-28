@@ -21,21 +21,16 @@ app.get("/ncov/api", (req, res) => {
       // const html = $("#root").html();
       const checkTime = $("#root").find($(".mapTitle___2QtRg"));
 
-      const count = $("#root").find($(".confirmedNumber___3WrF5"));
-      const data = $(count)
-        .children()
-        .children()
-        .map((i, el) => $(el).text());
+      const staticData = $("#getStatisticsService").get()[0].children[0].data;
+      const splitStart = staticData.split(
+        /(try { window.getStatisticsService = )/
+      );
+      const splitEnd = splitStart[2].split(/(}catch\(e\){})/);
 
-      console.log(typeof data, data[0], data[1], data[2], data[3]);
+      // console.log(splitEnd);
 
       res.send({
-        trend: {
-          diagnosis: data[0],
-          suspected: data[1],
-          cured: data[2],
-          deceased: data[3]
-        },
+        trend: JSON.parse(splitEnd[0]),
         time: checkTime.text()
       });
 

@@ -140,10 +140,10 @@ function App() {
       <H>感谢丁香园-丁香医生数据提供</H>
       {data ? (
         <CardContainer>
-          <Card title='确诊病例' icon='😷' count={data.trend.diagnosis} />
-          <Card title='疑似病例' icon='🤧' count={data.trend.suspected} />
-          <Card title='治愈病例' icon='💖' count={data.trend.cured} />
-          <Card title='死亡病例' icon='🎗' count={data.trend.deceased} />
+          <Card title='确诊病例' icon='😷' count={data.trend.confirmedCount} />
+          <Card title='疑似病例' icon='🤧' count={data.trend.suspectedCount} />
+          <Card title='治愈病例' icon='💖' count={data.trend.curedCount} />
+          <Card title='死亡病例' icon='🎗' count={data.trend.deadCount} />
         </CardContainer>
       ) : (
         <p>loading...</p>
