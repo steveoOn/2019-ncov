@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Card from "./components/card";
 import Location from "./components/location";
@@ -84,20 +84,9 @@ const H = styled.p`
 function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
-  const [location, setLocation] = useState([]);
 
-  const data = useApi();
-
-  // console.log(data);
-
-  useEffect(() => {
-    fetch("ncov/api/location")
-      .then(res => res.json())
-      .then(data => {
-        // console.log(data);
-        setLocation(data);
-      });
-  }, [location]);
+  const data = useApi("/ncov/api", { trend: null, time: null });
+  const location = useApi("/ncov/api/location", []);
 
   const search = e => {
     setText(e.target.value);
