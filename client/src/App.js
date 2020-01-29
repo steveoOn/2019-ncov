@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Moment from "react-moment";
 import Card from "./components/card";
 import Location from "./components/location";
 import { useApi } from "./container/useApi";
@@ -23,16 +24,27 @@ const TopContainer = styled.div`
   margin-bottom: 1rem;
   flex-direction: column;
 
-  .update-time {
+  .time-container {
+    display: flex;
+    margin-top: 1rem;
+    padding: 0.6rem;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 26px;
+    align-items: center;
+
+    p {
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
+
+  .update-time {
     color: white;
-    padding: 0.6rem 1rem;
     width: max-content;
     height: max-content;
     font-size: 14px;
     font-weight: 500;
-    margin-top: 1.5rem;
   }
 
   .high-line {
@@ -81,12 +93,20 @@ const H = styled.p`
   width: max-content;
 `;
 
+const Loading = styled.p`
+  text-align: center;
+  margin: 1rem 0;
+  color: rgba(0, 0, 0, 0.4);
+`;
+
 function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
 
-  const data = useApi("/ncov/api", { trend: null, time: null });
+  const data = useApi("/ncov/api", null);
   const location = useApi("/ncov/api/location", []);
+
+  const time = data ? new Date(data.modifyTime) : "--";
 
   const search = e => {
     setText(e.target.value);
@@ -107,7 +127,12 @@ function App() {
   return (
     <div className='App'>
       <TopContainer>
-        <p className='update-time'>{data.time}</p>
+        <div className='time-container'>
+          <p>最后更新于：</p>
+          <Moment className='update-time' format='YYYY/MM/DD kk:mm:ss'>
+            {time}
+          </Moment>
+        </div>
         <p className='high-line'>致敬</p>
         <p className='slogan'>
           奋斗在一线的医护人员
@@ -132,25 +157,25 @@ function App() {
         <Card
           title='确诊病例'
           icon='😷'
-          count={data.trend ? data.trend.confirmedCount : "..."}
+          count={data ? data.confirmedCount : "..."}
         />
         <Card
           title='疑似病例'
           icon='🤧'
-          count={data.trend ? data.trend.suspectedCount : "..."}
+          count={data ? data.suspectedCount : "..."}
         />
         <Card
           title='治愈病例'
           icon='💖'
-          count={data.trend ? data.trend.curedCount : "..."}
+          count={data ? data.curedCount : "..."}
         />
-        <Card
-          title='死亡病例'
-          icon='🎗'
-          count={data.trend ? data.trend.deadCount : "..."}
-        />
+        <Card title='死亡病例' icon='🎗' count={data ? data.deadCount : "..."} />
       </CardContainer>
-      <Location locations={filterText.length === 0 ? location : filterText} />
+      {location.length !== 0 ? (
+        <Location locations={filterText.length === 0 ? location : filterText} />
+      ) : (
+        <Loading>正在获取数据...</Loading>
+      )}
       <form onSubmit={submit}>
         <label htmlFor='search-location' />
         <SearchLocation onSearch={search} text={text} />

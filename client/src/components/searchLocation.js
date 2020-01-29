@@ -13,12 +13,12 @@ const Wrapper = styled.div`
     bottom: 1.5rem;
     left: 25%;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
-    background: rgba(245, 120, 35, 0.7);
-    color: white;
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.4);
+    color: #102320;
+    backdrop-filter: blur(5px);
 
     ::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(0, 0, 0, 0.5);
     }
   }
 `;

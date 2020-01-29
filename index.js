@@ -19,7 +19,6 @@ app.get("/ncov/api", (req, res) => {
   request(option)
     .then($ => {
       // const html = $("#root").html();
-      const checkTime = $("#root").find($(".mapTitle___2QtRg"));
 
       const staticData = $("#getStatisticsService").get()[0].children[0].data;
       const splitStart = staticData.split(
@@ -27,12 +26,7 @@ app.get("/ncov/api", (req, res) => {
       );
       const splitEnd = splitStart[2].split(/(}catch\(e\){})/);
 
-      // console.log(splitEnd);
-
-      res.send({
-        trend: JSON.parse(splitEnd[0]),
-        time: checkTime.text()
-      });
+      res.send(splitEnd[0]);
 
       // res.send(splitEnd[0]);
     })
