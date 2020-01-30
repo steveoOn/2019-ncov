@@ -41,7 +41,6 @@ const City = props => {
           <li key={city.cityName} className='li-city'>
             {city.cityName}
             <p>: 确诊{city.confirmedCount}</p>
-            <p>疑似{city.suspectedCount}</p>
             <p>治愈{city.curedCount}</p>
             <p>死亡{city.deadCount}</p>
           </li>
