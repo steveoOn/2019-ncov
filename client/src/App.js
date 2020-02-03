@@ -103,7 +103,7 @@ function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
 
-  const data = useApi("/ncov/api", null);
+  const { data } = useApi("/ncov/api", null);
   const location = useApi("/ncov/api/location", []);
 
   const time = data ? new Date(data.modifyTime) : "--";
@@ -116,7 +116,7 @@ function App() {
     e.preventDefault();
     // const result = data.location.filter(word => !word.indexOf(text));
 
-    const result = location.filter(result => {
+    const result = location.data.filter(result => {
       // console.log(result.provinceShortName);
       return !result.provinceShortName.indexOf(text);
     });
@@ -171,8 +171,10 @@ function App() {
         />
         <Card title='死亡病例' icon='🎗' count={data ? data.deadCount : "..."} />
       </CardContainer>
-      {location.length !== 0 ? (
-        <Location locations={filterText.length === 0 ? location : filterText} />
+      {!location.loading ? (
+        <Location
+          locations={filterText.length === 0 ? location.data : filterText}
+        />
       ) : (
         <Loading>正在获取数据...</Loading>
       )}

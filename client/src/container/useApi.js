@@ -1,23 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export const useApi = (url, defaultValue) => {
-  const [state, setState] = useState(defaultValue);
+export const useApi = url => {
+  const [state, setState] = useState({ data: null, loading: true });
+  const isCurrent = useRef(true);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
+    return () => {
+      // called when component is going to unMount
+      isCurrent.current = false;
+    };
+  }, []);
 
-    fetch(url, { signal })
+  useEffect(() => {
+    fetch(url)
       .then(res => res.json())
       .then(data => {
-        setState(data);
+        if (isCurrent.current) {
+          setState({ data, loading: false });
+        }
       })
       .catch(err => console.log(err));
-
-    return () => {
-      abortController.abort();
-    };
-  }, [state]);
+  }, [url]);
 
   return state;
 };

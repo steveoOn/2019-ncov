@@ -26,7 +26,7 @@ app.get("/ncov/api", (req, res) => {
       );
       const splitEnd = splitStart[2].split(/(}catch\(e\){})/);
 
-      res.send(splitEnd[0]);
+      res.json(JSON.parse(splitEnd[0]));
 
       // res.send(splitEnd[0]);
     })
@@ -46,7 +46,7 @@ app.get("/ncov/api/location", (req, res) => {
     const splitStart = text.split(/(try { window.getAreaStat = )/);
     const splitEnd = splitStart[2].split(/(}catch\(e\){})/);
 
-    res.send(splitEnd[0]);
+    res.json(JSON.parse(splitEnd[0]));
   });
 });
 
