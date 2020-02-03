@@ -12,6 +12,7 @@ export const useApi = url => {
   }, []);
 
   useEffect(() => {
+    setState(state => ({ data: state.data, loading: true }));
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -20,7 +21,7 @@ export const useApi = url => {
         }
       })
       .catch(err => console.log(err));
-  }, [url]);
+  }, [url, setState]);
 
   return state;
 };

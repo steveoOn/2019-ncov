@@ -158,18 +158,32 @@ function App() {
           title='确诊病例'
           icon='😷'
           count={data ? data.confirmedCount : "..."}
+          incr={data ? data.confirmedIncr : "..."}
         />
         <Card
           title='疑似病例'
           icon='🤧'
           count={data ? data.suspectedCount : "..."}
+          incr={data ? data.suspectedIncr : "..."}
+        />
+        <Card
+          title='重症病例'
+          icon='🤒'
+          count={data ? data.seriousCount : "..."}
+          incr={data ? data.seriousIncr : "..."}
         />
         <Card
           title='治愈病例'
           icon='💖'
           count={data ? data.curedCount : "..."}
+          incr={data ? data.curedIncr : "..."}
         />
-        <Card title='死亡病例' icon='🎗' count={data ? data.deadCount : "..."} />
+        <Card
+          title='死亡病例'
+          icon='🎗'
+          count={data ? data.deadCount : "..."}
+          incr={data ? data.deadIncr : "..."}
+        />
       </CardContainer>
       {!location.loading ? (
         <Location
