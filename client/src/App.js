@@ -109,7 +109,12 @@ function App() {
   const time = data ? new Date(data.modifyTime) : "--";
 
   const search = e => {
+    // const value = e.target.value.match(/[\u4e00-\u9fa5]/);
     setText(e.target.value);
+    const result = location.data.filter(
+      result => !result.provinceShortName.indexOf(e.target.value)
+    );
+    setFilterText(result);
   };
 
   const submit = e => {
