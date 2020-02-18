@@ -49,13 +49,14 @@ const Wrapper = styled.div`
 `;
 
 const Card = props => {
+  let isPositiveNum = props.incr > 0 ? "+" : "";
   return (
     <Wrapper>
       <p className='icon'>{props.icon}</p>
       <p className='count'>{props.count}</p>
       <div className='incr'>
         较昨日
-        <p>+{props.incr}</p>
+        <p>{`${isPositiveNum}${props.incr}`}</p>
       </div>
       <h4>{props.title}</h4>
     </Wrapper>

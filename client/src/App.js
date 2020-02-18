@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import styled from "styled-components";
 import Moment from "react-moment";
 import Card from "./components/card";
@@ -6,6 +6,8 @@ import Location from "./components/location";
 import { useApi } from "./container/useApi";
 import { ReactComponent as IconCors } from "./static/icon-cors.svg";
 import SearchLocation from "./components/searchLocation";
+import Tab from "./components/tab";
+import Chart from "./components/chart";
 
 const CardContainer = styled.div`
   display: grid;
@@ -102,6 +104,7 @@ const Loading = styled.p`
 function App() {
   const [text, setText] = useState("");
   const [filterText, setFilterText] = useState([]);
+  const [tab, setTab] = useState("data");
 
   const { data } = useApi("/ncov/api", null);
   const location = useApi("/ncov/api/location", []);
@@ -129,41 +132,24 @@ function App() {
     setFilterText(result);
   };
 
-  return (
-    <div className='App'>
-      <TopContainer>
-        <div className='time-container'>
-          <p>最后更新于：</p>
-          <Moment className='update-time' format='YYYY/MM/DD kk:mm:ss'>
-            {time}
-          </Moment>
-        </div>
-        <p className='high-line'>致敬</p>
-        <p className='slogan'>
-          奋斗在一线的医护人员
-          <span role='img' aria-label='医生'>
-            👨‍⚕️👩‍⚕️
-          </span>
-        </p>
-        <p className='provider'>
-          Designed by 💜
-          <a
-            href='https://siwen.site/about'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            siwen.site
-          </a>
-        </p>
-        <IconCors className='icon-cors' />
-      </TopContainer>
-      <H>感谢丁香园-丁香医生数据提供</H>
+  const toggleTab = output => {
+    setTab(output);
+  };
+
+  const tabOne = (
+    <Fragment>
       <CardContainer>
         <Card
-          title='确诊病例'
+          title='累计确诊'
           icon='😷'
           count={data ? data.confirmedCount : "..."}
           incr={data ? data.confirmedIncr : "..."}
+        />
+        <Card
+          title='现存确诊'
+          icon='😷'
+          count={data ? data.currentConfirmedCount : "..."}
+          incr={data ? data.currentConfirmedIncr : "..."}
         />
         <Card
           title='疑似病例'
@@ -201,6 +187,50 @@ function App() {
         <label htmlFor='search-location' />
         <SearchLocation onSearch={search} text={text} />
       </form>
+    </Fragment>
+  );
+
+  const tabTwo = (
+    <Fragment>
+      <Chart chartImg={data ? data.quanguoTrendChart : []} title='全国' />
+      <Chart
+        chartImg={data ? data.hbFeiHbTrendChart : []}
+        title='湖北/非湖北'
+      />
+    </Fragment>
+  );
+
+  return (
+    <div className='App'>
+      <TopContainer>
+        <div className='time-container'>
+          <p>最后更新于：</p>
+          <Moment className='update-time' format='YYYY/MM/DD kk:mm:ss'>
+            {time}
+          </Moment>
+        </div>
+        <p className='high-line'>致敬</p>
+        <p className='slogan'>
+          奋斗在一线的医护人员
+          <span role='img' aria-label='医生'>
+            👨‍⚕️👩‍⚕️
+          </span>
+        </p>
+        <p className='provider'>
+          Designed by 💜
+          <a
+            href='https://siwen.site/about'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            siwen.site
+          </a>
+        </p>
+        <IconCors className='icon-cors' />
+      </TopContainer>
+      <H>感谢丁香园-丁香医生数据提供</H>
+      <Tab onClick={toggleTab} tabName={tab} />
+      {tab === "data" ? tabOne : tabTwo}
     </div>
   );
 }
