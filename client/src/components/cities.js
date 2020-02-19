@@ -21,13 +21,13 @@ const Wrapper = styled.ul`
         color: #098ff1;
       }
       &:nth-child(2) {
-        color: #ff821d;
+        color: #ec51cb;
       }
       &:nth-child(3) {
-        color: #06d78c;
+        color: #19c394;
       }
       &:nth-child(4) {
-        color: #ff3768;
+        color: #999;
       }
     }
   }
@@ -37,10 +37,14 @@ const City = props => {
   return (
     <Wrapper>
       {props.cities.map(city => {
+        const positiveCurrentConfirmedCount =
+          city.currentConfirmedCount > 0 ? city.currentConfirmedCount : 0;
+
         return (
           <li key={city.cityName} className='li-city'>
             {city.cityName}
-            <p>: 确诊{city.confirmedCount}</p>
+            <p>: 现存{positiveCurrentConfirmedCount}</p>
+            <p>累计{city.confirmedCount}</p>
             <p>治愈{city.curedCount}</p>
             <p>死亡{city.deadCount}</p>
           </li>

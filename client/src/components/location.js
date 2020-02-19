@@ -40,7 +40,7 @@ const Location = props => {
         return (
           <Panel
             key={index}
-            header={`${location.provinceName}: 确诊${location.confirmedCount} 治愈${location.curedCount} 死亡${location.deadCount}`}
+            header={`${location.provinceName}: 现存${location.currentConfirmedCount} 累计${location.confirmedCount} 治愈${location.curedCount} 死亡${location.deadCount}`}
             headerClass='provinces'
             showArrow
           >
